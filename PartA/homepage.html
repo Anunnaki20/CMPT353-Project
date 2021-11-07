@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Wheels for Doughnuts</title>
+        <link rel="stylesheet" text="text/css" href="styles.css" />
+    </head>
+
+    <div class="header">
+        <h1>Company name here <img class="logo" src="images/logo.png" alt="Logo" > </h1>
+        <p>The best doughnuts on wheels service </p>
+    </div>
+
+    <!-- Tab links -->
+    <div class="tab">
+        <button class="tablinks" onclick="openContent(event, 'Doughnuts')" id="default">Doughnuts</button>
+        <button class="tablinks" onclick="openContent(event, 'CusReg')">Customer Reg</button>
+        <button class="tablinks" onclick="openContent(event, 'AboutUs')">About us</button>
+        <button class="tablinks" onclick="openContent(event, 'Staff')">Staff</button>
+    </div>
+
+    <!-- Script for the tabs -->
+    <script>
+
+        // Tab Event to change what is seen
+        function openContent(evt, content) {
+           
+            var i, tabcontent, tablinks;
+
+            // Get all content in the tabs and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none"; // hide all tab content
+            }
+
+            // Remove the active tab by looping through all tabs
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace("active");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(content).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Set the doughnuts tab as the default 
+        document.getElementById("default").click();
+
+    </script>
+
+
+    <script>
+
+        function addstaff(){
+
+            let firstname = document.getElementById('staffFname').value;
+            let lastname = document.getElementById('staffLname').value;
+            let title = document.getElementById('title').value;
+            let salary = document.getElementById('salary').value;
+            const data = { firstname, lastname, title, salary };
+
+
+            fetch('/addstaff', { // Send the json data
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+            // .then( function(response) { // After the response is recived 
+            //     if (response.status !== 200) {
+            //         console.log('Unable to get staff database. Status Code: ' + response.status);
+            //         return;
+            //     }
+            // })
+            // .catch(function(err) { // If an error happened
+            //     console.log('Fetch Error :-S', err);
+            // });
+    }
+
+    </script>
+
+  
+    <!-- Tab content -->
+    <div id="Doughnuts" class="tabcontent">
+        <h3>Currnet Doughnuts Avalible </h3>
+        <p>London is the capital city of England.</p>
+    </div>
+    
+    <div id="CusReg" class="tabcontent">
+        <h3>Customer Registration</h3>
+        <p>Paris is the capital of France.</p>
+    </div>
+
+    <div id="AboutUs" class="tabcontent">
+        <h3>About Us</h3>
+        <p>Tokyo is the capital of Japan.</p>
+    </div>
+      
+    <div id="Staff" class="tabcontent">
+        <h3>Staff </h3>
+        <p>Tokyo is the capital of Japan.</p>
+        <body>
+
+            <form onSubmit="addstaff();" class="RegStaff" id="RegStaff">
+                <label for="staff_firstname">First Name</label>
+                <input type="text" name="staff_firstname" id="staffFname">
+                <label for="staff_lastname">Last Name</label>
+                <input type="text" name="staff_firstname" id="staffLname">
+                <label for="staff_title">Title</label>
+                <input type="text" name="staff_title" id="title">
+                <label for="staff_salary">Salary</label>
+                <input type="number" name="staff_salary" id="salary">
+                <button type="submit" value="Post">Add Staff</button>
+            </form>
+
+        </body>
+    </div>
+
+
+
+
+
+
+</html>

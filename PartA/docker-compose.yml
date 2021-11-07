@@ -3,7 +3,7 @@
 version: '3'
 services:
 
- node1: 
+ server: 
   build: .
   depends_on:
    - mysql1
@@ -13,11 +13,10 @@ services:
 
  mysql1:
   image: mysql:5.7.31
-  container_name: A3
+  container_name: database
   ports:
    - "3306:3306"
   environment:
    MYSQL_ROOT_PASSWORD: admin
-   MYSQL_DATABASE: assignment
-
-
+   MYSQL_DATABASE: doughnuts_database
+   
