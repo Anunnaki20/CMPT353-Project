@@ -31,6 +31,7 @@
     border: 1px solid #ccc;
     background-color: #f1f1f1;
     clear: right;
+    
   }
   
   /* Style the buttons that are used to open the tab content */
@@ -63,3 +64,8 @@
     border-top: none;
     font-family: Helvetica, sans-serif;
   }
+
+  .selectoption{
+    display: none;
+  }
+

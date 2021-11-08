@@ -15,18 +15,21 @@
 
     <!-- Tab links -->
     <div class="tab">
-        <button class="tablinks" onclick="openContent(event, 'Doughnuts')" id="default">Doughnuts</button>
+        <button class="tablinks" onclick="openContent(event, 'Doughnuts')" id="defaultTab">Doughnuts</button>
         <button class="tablinks" onclick="openContent(event, 'CusReg')">Customer Reg</button>
         <button class="tablinks" onclick="openContent(event, 'AboutUs')">About us</button>
         <button class="tablinks" onclick="openContent(event, 'Staff')">Staff</button>
-    </div>
 
-    <!-- Script for the tabs -->
+    </div>  
+
+    
+
+    <!-- Script for the tabs  and dropdown in staff tab-->
     <script>
 
         // Tab Event to change what is seen
         function openContent(evt, content) {
-           
+
             var i, tabcontent, tablinks;
 
             // Get all content in the tabs and hide them
@@ -43,17 +46,32 @@
 
             // Show the current tab, and add an "active" class to the button that opened the tab
             document.getElementById(content).style.display = "block";
-            evt.currentTarget.className += " active";
+            evt.currentTarget.className += "active";
         }
 
-        // Set the doughnuts tab as the default 
-        document.getElementById("default").click();
+        function showStaffFunctionality(select){
 
+            var i, selectcontent;
+
+            // Get all content in the select and hide them
+            selectcontent = document.getElementsByClassName("selectoption");
+            for (i = 0; i < selectcontent.length; i++) {
+                selectcontent[i].style.display = "none"; // hide all tab content
+            }
+
+            document.getElementById(select.value).style.display = "block";
+        }
+
+        // Set the defaults 
+        document.getElementById("defaultTab").click();
+        document.getElementById('Reg/UpdateStaff').style.display = "block";
+    
     </script>
 
 
     <script>
 
+        //TODO: Finish the staff database managment stuff. Both frontend and Backend
         function addstaff(){
 
             let firstname = document.getElementById('staffFname').value;
@@ -67,23 +85,71 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
-            });
-            // .then( function(response) { // After the response is recived 
-            //     if (response.status !== 200) {
-            //         console.log('Unable to get staff database. Status Code: ' + response.status);
-            //         return;
-            //     }
-            // })
-            // .catch(function(err) { // If an error happened
-            //     console.log('Fetch Error :-S', err);
-            // });
-    }
+            })
+            .then( function(response) { // After the response is recived 
+                if (response.status !== 200) {
+                    console.log('Unable to get staff database. Status Code: ' + response.status);
+                    return;
+                }
+            })
+            .catch(function(err) { // If an error happened
+                console.log('Fetch Error :-S', err);
+            });   
+        }
+
+        function updatestaff(){
+
+            let firstname = document.getElementById('staffFname').value;
+            let lastname = document.getElementById('staffLname').value;
+            let title = document.getElementById('title').value;
+            let salary = document.getElementById('salary').value;
+            const data = { firstname, lastname, title, salary };
+
+            fetch('/updatestaff', { // Send the json data
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then( function(response) { // After the response is recived 
+                if (response.status !== 200) {
+                    console.log('Unable to get staff database. Status Code: ' + response.status);
+                    return;
+                }
+            })
+            .catch(function(err) { // If an error happened
+                console.log('Fetch Error :-S', err);
+            });   
+        }
+
+        function deletestaff(){
+
+            let firstname = document.getElementById('staffFname').value;
+            let lastname = document.getElementById('staffLname').value;
+            let title = document.getElementById('title').value;
+            let salary = document.getElementById('salary').value;
+            const data = { firstname, lastname, title, salary };
+
+            fetch('/deletestaff', { // Send the json data
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then( function(response) { // After the response is recived 
+                if (response.status !== 200) {
+                    console.log('Unable to get staff database. Status Code: ' + response.status);
+                    return;
+                }
+            })
+            .catch(function(err) { // If an error happened
+                console.log('Fetch Error :-S', err);
+            });   
+        }
 
     </script>
 
   
     <!-- Tab content -->
-    <div id="Doughnuts" class="tabcontent">
+    <div id="Doughnuts" class="tabcontent" style=display:block>
         <h3>Currnet Doughnuts Avalible </h3>
         <p>London is the capital city of England.</p>
     </div>
@@ -99,23 +165,103 @@
     </div>
       
     <div id="Staff" class="tabcontent">
-        <h3>Staff </h3>
-        <p>Tokyo is the capital of Japan.</p>
-        <body>
 
-            <form onSubmit="addstaff();" class="RegStaff" id="RegStaff">
-                <label for="staff_firstname">First Name</label>
-                <input type="text" name="staff_firstname" id="staffFname">
-                <label for="staff_lastname">Last Name</label>
-                <input type="text" name="staff_firstname" id="staffLname">
-                <label for="staff_title">Title</label>
-                <input type="text" name="staff_title" id="title">
-                <label for="staff_salary">Salary</label>
-                <input type="number" name="staff_salary" id="salary">
-                <button type="submit" value="Post">Add Staff</button>
-            </form>
+        <select name="staffcommands" id="staff_functionality" onchange="showStaffFunctionality(this)">
+            <option value="Reg/UpdateStaff">Reg/Update Staff</option>
+            <option value="Reg/UpdateCustomerData">Reg/Update Customer Data</option>
+            <option value="AllCustomers">All Customers</option>
+            <option value="AllData">All Data</option>
+            <option value="AddReport">Add Report</option>
+        </select>
 
-        </body>
+        <div class="selectoption" id="Reg/UpdateStaff" style=display:block>
+            <h3>Add Staff </h3>
+            <p>Tokyo is the capital of Japan.</p>
+            <body>
+                <form onSubmit="addstaff();" class="RegStaff" id="RegStaff">
+                    <label for="staff_firstname">First Name</label>
+                    <input type="text" name="staff_firstname" id="staffFname"><br>
+                    <label for="staff_lastname">Last Name</label>
+                    <input type="text" name="staff_firstname" id="staffLname"><br>
+                    <label for="staff_title">Title</label>
+                    <input type="text" name="staff_title" id="title"><br>
+                    <label for="staff_salary">Salary</label>
+                    <input type="number" name="staff_salary" id="salary"><br>
+                    <button type="submit" value="Post">Add Staff</button><br>
+                </form>
+            </body>
+        </div>
+
+        <div class="selectoption" id="Reg/UpdateCustomerData">
+            <h3>Register/Updata/Delete Customer Data</h3>
+            <body>
+                <form onSubmit="addstaff();" class="RegStaff" id="RegStaff">
+                    <label for="staff_firstname">First Name</label>
+                    <input type="text" name="staff_firstname" id="staffFname"><br>
+                    <label for="staff_lastname">Last Name</label>
+                    <input type="text" name="staff_firstname" id="staffLname"><br>
+                    <label for="staff_title">Title</label>
+                    <input type="text" name="staff_title" id="title"><br>
+                    <label for="staff_salary">Salary</label>
+                    <input type="number" name="staff_salary" id="salary"><br>
+                    <button type="submit" value="Post">Add Staff</button><br>
+                </form>
+            </body>
+        </div>
+
+        <div class="selectoption" id="AllCustomers">
+            <h3>All Customers</h3>
+            <body>
+                <form class="RegStaff" id="RegStaff">
+                    <label for="staff_firstname">First Name</label>
+                    <input type="text" name="staff_firstname" id="staffFname"><br>
+                    <label for="staff_lastname">Last Name</label>
+                    <input type="text" name="staff_firstname" id="staffLname"><br>
+                    <label for="staff_title">Title</label>
+                    <input type="text" name="staff_title" id="title"><br>
+                    <label for="staff_salary">Salary</label>
+                    <input type="number" name="staff_salary" id="salary"><br>
+                    <button type="submit" value="Post">Add Staff</button><br>
+                </form>
+            </body>
+        </div>
+        
+        <div class="selectoption" id="AllData">
+            <h3>All Data </h3>
+            <body>
+                <form class="RegStaff" id="RegStaff">
+                    <label for="staff_firstname">First Name</label>
+                    <input type="text" name="staff_firstname" id="staffFname"><br>
+                    <label for="staff_lastname">Last Name</label>
+                    <input type="text" name="staff_firstname" id="staffLname"><br>
+                    <label for="staff_title">Title</label>
+                    <input type="text" name="staff_title" id="title"><br>
+                    <label for="staff_salary">Salary</label>
+                    <input type="number" name="staff_salary" id="salary"><br>
+                    <button type="submit" value="Post">Add Staff</button><br>
+                </form>
+            </body>
+        </div>
+
+        <div class="selectoption" id="AddReport">
+            <h3>Add Customer Report</h3>
+            <body>
+                <form class="RegStaff" id="RegStaff">
+                    <label for="staff_firstname">First Name</label>
+                    <input type="text" name="staff_firstname" id="staffFname"><br>
+                    <label for="staff_lastname">Last Name</label>
+                    <input type="text" name="staff_firstname" id="staffLname"><br>
+                    <label for="staff_title">Title</label>
+                    <input type="text" name="staff_title" id="title"><br>
+                    <label for="staff_salary">Salary</label>
+                    <input type="number" name="staff_salary" id="salary"><br>
+                    <button type="submit" value="Post">Add Staff</button><br>
+                </form>
+            </body>
+        </div>
+
+
+
     </div>
 
 
