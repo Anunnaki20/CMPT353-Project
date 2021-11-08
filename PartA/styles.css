@@ -13,6 +13,14 @@
     margin-right: -10px; 
 }
 
+h3 {
+  font-family: Helvetica, sans-serif;
+}
+
+p {
+  font-family: Helvetica, sans-serif;
+}
+
 .logo{
   float:right;
   width:150px;
@@ -65,7 +73,56 @@
     font-family: Helvetica, sans-serif;
   }
 
-  .selectoption{
+.selectoption{
     display: none;
   }
 
+textarea {
+  border: 3px solid #ccc;
+  width: 540px;
+  height: 150px;
+  padding: 5px;
+  font-family: Helvetica, sans-serif;
+  float: right;
+}
+
+form{
+  padding-top: 70px;
+}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+/* form field styling */
+input[type=text], input[type=number]  {
+  width: 25%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  background: #f1f1f1;
+}
+
+/* Button styling */
+.submitbtn {
+  background-color: #aa04aa;
+  color: white;
+  font-family: Helvetica, sans-serif;
+  font-size: large;
+  padding: 16px 20px;
+  margin: 8px 0;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+select {
+  font-family: Helvetica, sans-serif;
+  width: 25%;
+  border: 1px solid;
+  padding: 3px;
+  font-size: large;
+  cursor: pointer;
+}

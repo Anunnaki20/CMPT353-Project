@@ -83,8 +83,39 @@ function addstaff( firstname, lastname, title, salary ){
 //----------------------------------------
 
 app.post("/addstaff", function(req, res) {
-    console.log(req.body);
-    res.sendStatus(200)
+    console.log(req.body.firstname);
+    addstaff(req.body.firstname, req.body.lastname, req.body.title, req.body.salary );
+    res.sendStatus(200);
+});
+
+app.get("/getstaff", function(req, res) {
+  var sql = "SELECT * FROM staff";
+
+  connection.query(sql, function (err, result) {
+    if (err) throw err;
+
+    let staff_data = "";
+
+    // Get the data from the keys
+    Object.keys(result).forEach(function(key) {
+        var row = result[key];
+
+        // Get the topic
+        if (staff_data.length <= 0){
+          staff_data = "" + row.firstname + " ";
+        }
+        else {
+          staff_data += "" + row.firstname + " ";
+        }
+        
+        // Get the data and timestamp
+        staff_data += "" + row.lastname + " ";
+        staff_data += "title: " + row.title +" ";
+        staff_data += "salary: " + row.salary +"\n";
+    });
+    res.send(staff_data);
+  });
+
 });
 
 app.get("/", function(req, res) {
