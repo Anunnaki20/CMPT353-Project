@@ -24,12 +24,13 @@ var connection =  mysql.createConnection({
   port: "3306"
 });
 
+// Connect the the MYSQL databse
 connection.connect((err) => {
   if (err) { 
     throw err;
   }
   else{
-    console.log("Connected!");
+    console.log("Connected to doughnuts_database!");
   }
 });
 
@@ -80,12 +81,54 @@ function addstaff( firstname, lastname, title, salary ){
         console.log("New Staff added");
     });
 }
+
+function updatestaff( staffID, firstname, lastname, title, salary ){
+
+  if (firstname.length > 0){
+    var sql = "UPDATE staff SET firstname='" + firstname +"' WHERE staff_ID=" + staffID;
+    connection.query(sql, function (err, result) {
+      if (err) { throw err; }
+    });
+  }
+  if (lastname.length > 0){
+    var sql = "UPDATE staff SET lastname='" + lastname +"' WHERE staff_ID=" + staffID;
+    connection.query(sql, function (err, result) {
+      if (err) { throw err; }
+    });
+  }
+  if (title.length > 0){
+    var sql = "UPDATE staff SET title='" + title +"' WHERE staff_ID=" + staffID;
+    connection.query(sql, function (err, result) {
+      if (err) { throw err; }
+    });
+  }
+  if (salary.length > 0){
+    var sql = "UPDATE staff SET salary='" + salary +"' WHERE staff_ID=" + staffID;
+    connection.query(sql, function (err, result) {
+      if (err) { throw err; }
+    });
+  }
+
+  console.log("Updated staff");
+}
+
+function deletestaff( staffID ){
+
+  var sql = "DELETE FROM staff WHERE staff_ID=" + staffID;
+  connection.query(sql, function (err, result) {
+    if (err) { throw err; }
+  });
+
+  console.log("Deleted staff");
+}
+
 //----------------------------------------
 
+//------------ Stuff for messing with the staff databse ------------
 app.post("/addstaff", function(req, res) {
-    console.log(req.body.firstname);
+
     addstaff(req.body.firstname, req.body.lastname, req.body.title, req.body.salary );
-    res.sendStatus(200);
+    res.sendStatus(200);;
 });
 
 app.get("/getstaff", function(req, res) {
@@ -93,7 +136,6 @@ app.get("/getstaff", function(req, res) {
 
   connection.query(sql, function (err, result) {
     if (err) throw err;
-
     let staff_data = "";
 
     // Get the data from the keys
@@ -102,26 +144,45 @@ app.get("/getstaff", function(req, res) {
 
         // Get the topic
         if (staff_data.length <= 0){
-          staff_data = "" + row.firstname + " ";
+          staff_data = "ID: " + row.staff_ID + ", ";
         }
         else {
-          staff_data += "" + row.firstname + " ";
+          staff_data += "ID: " + row.staff_ID + ", ";
         }
         
         // Get the data and timestamp
-        staff_data += "" + row.lastname + " ";
-        staff_data += "title: " + row.title +" ";
-        staff_data += "salary: " + row.salary +"\n";
+        staff_data += "" + row.firstname + " ";
+        staff_data += "" + row.lastname + ", ";
+        staff_data += "Title: " + row.title +", ";
+        staff_data += "Salary: $" + row.salary +"\n";
     });
+    console.log("Retrevied Data");
     res.send(staff_data);
   });
 
 });
 
+app.put("/updatestaff", function(req, res) {
+
+  updatestaff(req.body.staffID, req.body.firstname, req.body.lastname, req.body.title, req.body.salary );
+  res.sendStatus(200);
+});
+
+app.delete("/deletestaff", function(req, res) {
+
+  deletestaff( req.body.staffID );
+  res.sendStatus(200);
+});
+//----------------------------------------------------- ------------
+
+
+
+// Get the html file
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/homepage.html");
 });
 
+// Use the root directory. Needed to link html and the css file
 app.use('/', express.static(__dirname));
 
 app.listen(PORT, HOST);
