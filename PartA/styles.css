@@ -86,6 +86,26 @@ p {
   float: right;
 }
 
+.customerDatabaseContent {
+  border: 3px solid #ccc;
+  width: 540px;
+  height: 150px;
+  padding: 5px;
+  font-family: Helvetica, sans-serif;
+  font-size: large;
+  float: right;
+}
+
+.AllData {
+  border: 3px solid #ccc;
+  width: 540px;
+  height: 150px;
+  padding: 5px;
+  font-family: Helvetica, sans-serif;
+  font-size: large;
+}
+
+
 
 .inputform{
   padding-top: 70px;

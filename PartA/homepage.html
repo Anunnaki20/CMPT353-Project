@@ -65,7 +65,7 @@
     </script>
 
 
-    <!-- Scripts for messing with the staff datab-->
+    <!-- Scripts for messing with the databases-->
     <script>
 
         // Gets the staff data and places it the staff content text area
@@ -73,7 +73,7 @@
             fetch('/getstaff')
             .then( function(response) { // After the response is recived 
                 if (response.status !== 200) {
-                    console.log('Unable to get staff database. Status Code: ' + response.status);
+                    alert('Unable to get staff database. Status Code: ' + response.status);
                     return;
                 }
 
@@ -171,6 +171,118 @@
             });   
         }
 
+
+        // Function to load all of the text areas as onload only gets called on the first body tag
+        function loadalltextarea(){
+            getstaff();
+            getcustomer();
+        }
+
+
+        // Scripts for the customer database
+        // Gets the staff data and places it the staff content text area
+        
+        function getcustomer(){
+
+            fetch('/getcustomer')
+            .then( function(response) { // After the response is recived 
+                if (response.status !== 200) {
+                    alert('Unable to get customer database. Status Code: ' + response.status);
+                    return;
+                }
+
+                return response.text().then(function(text) {
+
+                    var i, customerTextArea;
+
+                    // Get all content in the tabs and hide them
+                    customerTextArea = document.getElementsByClassName("customerDatabaseContent");
+                    for (i = 0; i < customerTextArea.length; i++) {
+                        customerTextArea[i].value = text; // hide all tab content
+                    }
+
+                 });
+                
+            }) 
+            .catch(function(err) { // If an error happened
+                console.log('Fetch Error :-S', err);
+            });   
+        }
+
+        function addcustomer(){
+
+            let firstname = document.getElementById('AddCustomerFname').value;
+            let lastname = document.getElementById('AddCustomereLname').value;
+            let order_details = document.getElementById('AddorderDetails').value;
+            let order_amount = document.getElementById('AddCustomerOrderAmount').value;
+            const data = { firstname, lastname, order_details, order_amount };
+
+
+            fetch('/addcustomer', { // Send the json data
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then( function(response) { // After the response is recived 
+                if (response.status !== 200) {
+                    alert('Unable to get customer database. Status Code: ' + response.status);
+                    return;
+                }
+                alert("Successfully Added a new customer to the database");
+            })
+            .catch(function(err) { // If an error happened
+                console.log('Fetch Error :-S', err);
+            });   
+        }
+
+        function updatecustomer(){
+
+            let firstname = document.getElementById('UpdatecustomerFname').value;
+            let lastname = document.getElementById('UpdatestaffLname').value;
+            let order_details = document.getElementById('UpdatecustomerLname').value;
+            let order_amount = document.getElementById('UpdateOrderAmount').value;
+            let customerID = document.getElementById('UpdatecustomerID').value;
+            const data = { customerID, firstname, lastname, order_details, order_amount };
+
+            fetch('/updatecustomer', { // Send the json data
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then( function(response) { // After the response is recived 
+                if (response.status !== 200) {
+                    alert('Unable to update database. Status Code: ' + response.status);
+                    return;
+                }
+                alert("Successfully Updated the customer database");
+            })
+            .catch(function(err) { // If an error happened
+                console.log('Fetch Error :-S', err);
+            });   
+        }
+
+        function deletecustomer(){
+
+            let customerID = document.getElementById('DeletecustomerID').value;
+            const data = { customerID };
+
+            fetch('/deletecustomer', { // Send the json data
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then( function(response) { // After the response is recived 
+                if (response.status !== 200) {
+                    alert('Unable to Delete customer from the database. Status Code: ' + response.status);
+                    return;
+                }
+                alert('Successfully deleted customer from the database');
+            })
+            .catch(function(err) { // If an error happened
+                console.log('Fetch Error :-S', err);
+            });   
+        }
+
     </script>
 
   
@@ -197,7 +309,6 @@
             <option value="RegCustomer">Add Customers</option>
             <option value="UpdateCustomer">Update Customers</option>
             <option value="DeleteCustomer">Delete Customers</option>
-            <option value="AllCustomers">All Customers</option>
             <option value="AllData">All Data</option>
             <option value="AddReport">Add Report</option>
         </select>
@@ -207,7 +318,7 @@
         <div class="selectoption" id="RegStaff">
 
             <!--Current staff textarea-->
-            <body onload="getstaff();">
+            <body onload="loadalltextarea();">
                 <form>
                     <label style="float: right;"  for="staffDatabaseContent"><b>Current Staff in the Database</b></label>
                     <br>
@@ -215,21 +326,20 @@
                     <button class="refreshbtn" type="submit" value="GET">Refresh</button>
                 </form>
             </body>
-           
-                
+            
             <h3>Add Staff </h3>
             <p>Fill in this form to add staff to the database.</p>
             <p>The current staff in the system are shown to the right</p>
             <form onSubmit="addstaff();" class="inputform" id="RegStaffform">
                 <hr>
                 <label for="staff_firstname"><b>First Name:</b></label><br>
-                <input type="text" name="staff_firstname" id="AddstaffFname"><br>
+                <input type="text" name="staff_firstname" id="AddstaffFname" required><br>
 
                 <label for="staff_lastname"><b>Last Name:</b></label><br>
-                <input type="text" name="staff_firstname" id="AddstaffLname"><br>
+                <input type="text" name="staff_firstname" id="AddstaffLname" required><br>
 
                 <label for="staff_title"><b>Job Title:</b></label><br>
-                <input type="text" name="staff_title" id="Addtitle"><br>
+                <input type="text" name="staff_title" id="Addtitle" required><br>
 
                 <label for="staff_salary"><b>Salary:</b></label><br>
                 <input type="number" name="staff_salary" id="Addsalary">
@@ -239,12 +349,11 @@
             </form>
         </div>
 
-
         <!-- Updating staff form -->
         <div class="selectoption" id="UpdateStaff">
 
             <!--Current staff textarea-->
-            <body onload="getstaff();">
+            <body onload="loadalltextarea();">
                 <form>
                     <label style="float: right;"  for="staffDatabaseContent"><b>Current Staff in the Database</b></label>
                     <br>
@@ -255,7 +364,7 @@
                
             <h3>Update Staff </h3>
             <p>Fill in this form to update the info of the staff in the databse.</p>
-            <p>The Staff ID field is required in orde to update the staff.</p>
+            <p>The Staff ID field is required in order to update the staff.</p>
             <form onSubmit="updatestaff();" class="inputform" id="UpdateStaffform">
                 <hr>
                 <label for="staff_ID"><b>Staff ID:</b></label><br>
@@ -283,7 +392,7 @@
         <div class="selectoption" id="DeleteStaff">
 
             <!--Current staff textarea-->
-            <body onload="getstaff();">
+            <body onload="loadalltextarea();">
                 <form>
                     <label style="float: right;"  for="staffDatabaseContent"><b>Current Staff in the Database</b></label>
                     <br>
@@ -309,86 +418,130 @@
 
         <!-- Adding customer form -->
         <div class="selectoption" id="RegCustomer">
+
+            <!--Current Customer textarea-->
+            <body onload="loadalltextarea();">
+                <form>
+                    <label style="float: right;"  for="customerDatabaseContent"><b>Current Customers in the Database</b></label>
+                    <br>
+                    <textarea disabled="true" class="customerDatabaseContent" id="customerDatabaseContent"></textarea>
+                    <button class="refreshbtn" type="submit" value="GET">Refresh</button>
+                </form>
+            </body>
+                
             <h3>Add Customer</h3>
-            <form onSubmit="" class="inputform" id="RegCustomerform">
+            <p>Fill in this form to add customer in the databse.</p>
+            <form onSubmit="addcustomer();" class="inputform" id="AddCustomerform">
                 <hr>
-                <label for="staff_firstname"><b>First Name:</b></label><br>
-                <input type="text" name="staff_firstname" id="AddstaffFname"><br>
+                <label for="customer_firstname"><b>First Name:</b></label><br>
+                <input type="text" name="customer_firstname" id="AddCustomerFname"><br>
 
-                <label for="staff_lastname"><b>Last Name:</b></label><br>
-                <input type="text" name="staff_firstname" id="AddstaffLname"><br>
+                <label for="customer_lastname"><b>Last Name:</b></label><br>
+                <input type="text" name="customer_lastname" id="AddCustomereLname"><br>
 
-                <label for="staff_title"><b>Job Title:</b></label><br>
-                <input type="text" name="staff_title" id="Addtitle"><br>
+                <label for="order_details"><b>Order Details:</b></label><br>
+                <input type="text" name="order_details" id="AddorderDetails"><br>
 
-                <label for="staff_salary"><b>Salary:</b></label><br>
-                <input type="number" name="staff_salary" id="Addsalary">
+                <label for="order_amount"><b>Order Amount:</b></label><br>
+                <input type="number" name="order_amount" id="AddCustomerOrderAmount">
                 <hr>
                 
-                <button class="submitbtn" type="submit" value="Post">Add Staff</button><br>
+                <button class="submitbtn" type="submit" value="POST">Add Customer</button><br>
             </form>
         </div>
 
         <!-- Update customer form -->
         <div class="selectoption" id="UpdateCustomer">
+
+            <!--Current Customer textarea-->
+            <body onload="loadalltextarea();">
+                <form>
+                    <label style="float: right;"  for="customerDatabaseContent"><b>Current Customers in the Database</b></label>
+                    <br>
+                    <textarea disabled="true" class="customerDatabaseContent" id="customerDatabaseContent"></textarea>
+                    <button class="refreshbtn" type="submit" value="GET">Refresh</button>
+                </form>
+            </body>
+
             <h3>Updata Customer Data</h3>
-
-            <form onSubmit="" class="inputform" id="UpdateCustomerform">
+            <p>Fill in this form to update the info of the customer in the databse.</p>
+            <p>The Customer ID field is required in order to update the customer.</p>
+            <form onSubmit="updatecustomer();" class="inputform" id="UpdateStaffform">
                 <hr>
-                <label for="staff_firstname"><b>First Name:</b></label><br>
-                <input type="text" name="staff_firstname" id="AddstaffFname"><br>
+                <label for="customer_ID"><b>Customer ID:</b></label><br>
+                <input type="number" name="customer_ID" id="UpdatecustomerID" required><br>
 
-                <label for="staff_lastname"><b>Last Name:</b></label><br>
-                <input type="text" name="staff_firstname" id="AddstaffLname"><br>
+                <label for="customer_firstname"><b>First Name:</b></label><br>
+                <input type="text" name="customer_firstname" id="UpdatecustomerFname"><br>
 
-                <label for="staff_title"><b>Job Title:</b></label><br>
-                <input type="text" name="staff_title" id="Addtitle"><br>
+                <label for="customer_lastname"><b>Last Name:</b></label><br>
+                <input type="text" name="customer_firstname" id="UpdatecustomerLname"><br>
 
-                <label for="staff_salary"><b>Salary:</b></label><br>
-                <input type="number" name="staff_salary" id="Addsalary">
+                <label for="order_details"><b>Order Details:</b></label><br>
+                <input type="text" name="order_details" id="UpdateOrderDetails"><br>
+
+                <label for="order_amount"><b>Order Amount:</b></label><br>
+                <input type="number" name="order_amount" id="UpdateOrderAmount">
                 <hr>
                 
-                <button class="submitbtn" type="submit" value="Post">Add Staff</button><br>
+                <button class="submitbtn" type="submit" value="PUT">Update Staff</button><br>
             </form>
         </div>
 
 
         <!-- Delete customer form -->
         <div class="selectoption" id="DeleteCustomer">
+
+            <!--Current Customer textarea-->
+            <body onload="loadalltextarea();">
+                <form>
+                    <label style="float: right;"  for="customerDatabaseContent"><b>Current Customers in the Database</b></label>
+                    <br>
+                    <textarea disabled="true" class="customerDatabaseContent" id="customerDatabaseContent"></textarea>
+                    <button class="refreshbtn" type="submit" value="GET">Refresh</button>
+                </form>
+            </body>
+
             <h3>Delete Customer Data</h3>
-
-            <form onSubmit="" class="inputform" id="DeleteCustomerform">
+            <p>Fill in this form to delete customer.</p>
+            <form onSubmit="deletecustomer();" class="inputform" id="DeleteCustomerform">
                 <hr>
-                <label for="staff_firstname"><b>First Name:</b></label><br>
-                <input type="text" name="staff_firstname" id="AddstaffFname"><br>
-
-                <label for="staff_lastname"><b>Last Name:</b></label><br>
-                <input type="text" name="staff_firstname" id="AddstaffLname"><br>
-
-                <label for="staff_title"><b>Job Title:</b></label><br>
-                <input type="text" name="staff_title" id="Addtitle"><br>
-
-                <label for="staff_salary"><b>Salary:</b></label><br>
-                <input type="number" name="staff_salary" id="Addsalary">
+                <label for="customer_ID"><b>Customer ID:</b></label><br>
+                <input type="number" name="customer_ID" id="DeletecustomerID" required><br><br>
                 <hr>
                 
-                <button class="submitbtn" type="submit" value="Post">Add Staff</button><br>
+                <button class="submitbtn" type="submit" value="DELETE">Delete Customer</button><br>
             </form>
             
         </div>
 
-
-
-        <!-- All customer data -->
-        <div class="selectoption" id="AllCustomers">
-            <h3>All Customers</h3>
-
-        </div>
         
         <!-- All data. Customer and staff -->
         <div class="selectoption" id="AllData">
             <h3>All Data </h3>
 
+            <hr>
+            <!--Current Customer textarea-->
+            <body onload="loadalltextarea();">
+                <form>
+                    <label for="customerDatabaseContent"><b>Current Customers in the Database</b></label>
+                    <br>
+                    <textarea style="float:none; width: 800px; height: 200px;" disabled="true" class="customerDatabaseContent" id="customerDatabaseContent"></textarea>
+                    <button class="refreshbtn" type="submit" value="GET">Refresh</button>
+                </form>
+            </body>
+
+            <!--Current staff textarea-->
+            <body onload="loadalltextarea();">
+                <form>
+                    <label for="staffDatabaseContent"><b>Current Staff in the Database</b></label>
+                    <br>
+                    <textarea style="float:none; width: 800px; height: 200px;" disabled="true" class="staffDatabaseContent" id="staffDatabaseContent"></textarea>
+                    <button class="refreshbtn" type="submit" value="GET">Refresh</button>
+                </form>
+            </body>
+            
+            <hr>
         </div>
 
         <!-- Add a customer report form -->

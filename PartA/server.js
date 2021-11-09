@@ -38,7 +38,7 @@ connection.connect((err) => {
 CREATE TABLE customer(staff_ID INT unsigned NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(255) NOT NULL,
   lastname VARCHAR(255) NOT NULL,
-  title VARCHAR(255),
+  title VARCHAR(255) NOT NULL,
   salary INT unsigned,
   PRIMARY KEY (staff_ID)
 );
@@ -122,6 +122,58 @@ function deletestaff( staffID ){
   console.log("Deleted staff");
 }
 
+
+
+function addcustomer(firstname, lastname, order_details, order_amount){
+  // The MYSQL command to insert the topic, data, and timestamp of the post into the posts table
+  var sql = "INSERT INTO customer (firstname, lastname, order_details, order_amount) VALUES ('" + firstname +"', '"+ lastname +"', '" + order_details +"', '" + order_amount + "')";
+
+  connection.query(sql, function (err, result) {
+      if (err) { throw err; }
+      console.log("New Customer added");
+  });
+}
+
+function updatecustomer( customerID, firstname, lastname, order_details, order_amount ){
+
+  if (firstname.length > 0){
+    var sql = "UPDATE customer SET firstname='" + firstname +"' WHERE customer_ID=" + customerID;
+    connection.query(sql, function (err, result) {
+      if (err) { throw err; }
+    });
+  }
+  if (lastname.length > 0){
+    var sql = "UPDATE customer SET lastname='" + lastname +"' WHERE customer_ID=" + customerID;
+    connection.query(sql, function (err, result) {
+      if (err) { throw err; }
+    });
+  }
+  if (order_details.length > 0){
+    var sql = "UPDATE customer SET order_details='" + order_details +"' WHERE customer_ID=" + customerID;
+    connection.query(sql, function (err, result) {
+      if (err) { throw err; }
+    });
+  }
+  if (order_amount.length > 0){
+    var sql = "UPDATE customer SET order_amount='" + order_amount +"' WHERE customer_ID=" + customerID;
+    connection.query(sql, function (err, result) {
+      if (err) { throw err; }
+    });
+  }
+
+  console.log("Updated customer");
+}
+
+function deletecustomer( customerID ){
+
+  var sql = "DELETE FROM customer WHERE customer_ID=" + customerID;
+  connection.query(sql, function (err, result) {
+    if (err) { throw err; }
+  });
+
+  console.log("Deleted staff");
+}
+
 //----------------------------------------
 
 //------------ Stuff for messing with the staff databse ------------
@@ -156,7 +208,7 @@ app.get("/getstaff", function(req, res) {
         staff_data += "Title: " + row.title +", ";
         staff_data += "Salary: $" + row.salary +"\n";
     });
-    console.log("Retrevied Data");
+    console.log("Retrevied Staff Data");
     res.send(staff_data);
   });
 
@@ -174,6 +226,58 @@ app.delete("/deletestaff", function(req, res) {
   res.sendStatus(200);
 });
 //----------------------------------------------------- ------------
+
+//------------ Stuff for messing with the customer databse ------------
+app.post("/addcustomer", function(req, res) {
+
+  addcustomer(req.body.firstname, req.body.lastname, req.body.order_details, req.body.order_amount );
+  res.sendStatus(200);;
+});
+
+app.get("/getcustomer", function(req, res) {
+  var sql = "SELECT * FROM customer";
+
+  connection.query(sql, function (err, result) {
+    if (err) throw err;
+    let customer_data = "";
+
+  // Get the data from the keys
+  Object.keys(result).forEach(function(key) {
+      var row = result[key];
+
+      // Get the topic
+      if (customer_data.length <= 0){
+        customer_data = "ID: " + row.customer_ID + ", ";
+      }
+      else {
+        customer_data += "ID: " + row.customer_ID + ", ";
+      }
+      
+      // Get the data and timestamp
+      customer_data += "" + row.firstname + " ";
+      customer_data += "" + row.lastname + ", ";
+      customer_data += "Order Details: " + row.order_details +", ";
+      customer_data += "Order Amount: " + row.order_amount +"\n";
+  });
+
+  console.log("Retrevied Customer Data");
+  res.send(customer_data);
+});
+
+});
+
+app.put("/updatecustomer", function(req, res) {
+  updatecustomer(req.body.customerID, req.body.firstname, req.body.lastname, req.body.order_details, req.body.order_amount );
+  res.sendStatus(200);
+});
+
+app.delete("/deletecustomer", function(req, res) {
+  deletecustomer( req.body.customerID );
+  res.sendStatus(200);
+});
+//----------------------------------------------------- ------------
+
+
 
 
 
