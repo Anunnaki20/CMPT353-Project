@@ -28,7 +28,11 @@ p {
   position: relative;
   top: -30px;
   right: 30px;
-  
+}
+
+.doughnuts_pic{
+  width:120px;
+  height:120px;
 }
 
 /* Style the tab */
@@ -172,4 +176,16 @@ select {
   padding: 3px;
   font-size: large;
   cursor: pointer;
+}
+
+table {
+  font-family: Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 10px;
 }

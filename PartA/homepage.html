@@ -337,14 +337,59 @@
   
     <!-- Tab content -->
     <!-- NOTE: The item with the display block is displayed by default -->
-    <div id="Doughnuts" class="tabcontent" style="display: block;">
-        <h3>Currnet Doughnuts Avalible </h3>
-        <p>London is the capital city of England.</p>
+    <div id="Doughnuts" class="tabcontent" >
+        <h3>Current Doughnuts Available</h3>
+
+        <table>
+            <tr>
+                <th>Doughnut</th>
+                <th>Description</th>
+                <th>Image</th>
+            </tr>
+            <tr>
+                <td>Classic Glazed Doughnut</td>
+                <td>A classic glazed yeasted doughnut</td>
+                <td><img class="doughnuts_pic" src="images/glaze.png" alt="Glazed Doughnut"> </td>
+            </tr>
+            <tr>
+                <td>White Chocolate Doughnut</td>
+                <td>Premium white chocolate glaze with rainbow sprinkels on top </td>
+                <td><img class="doughnuts_pic" src="images/white_sprinkle.png" alt="White Sprinkled Doughnut"> </td>
+            </tr>
+            <tr>
+                <td>Caramel Doughnut</td>
+                <td>Caramel glazes doughnut with caramel chocolate shavings </td>
+                <td><img class="doughnuts_pic" src="images/caramel.png" alt="White Sprinkled Doughnut"> </td>
+            </tr>
+            <tr>
+                <td>Dark Chocolate Doughnut</td>
+                <td>Dark chocolate glazed doughnut with sprinkles on the side </td>
+                <td><img class="doughnuts_pic" src="images/chcoc_sidesprinkle.png" alt="White Sprinkled Doughnut"> </td>
+            </tr>
+            <tr>
+                <td>Milk Chocolate Sprinkle Doughnut</td>
+                <td>Classic milk chocolate sprinkle doughnut </td>
+                <td><img class="doughnuts_pic" src="images/choc_allsprinkle.png" alt="White Sprinkled Doughnut"> </td>
+            </tr>
+            <tr>
+                <td>Rasberry filled Doughnut</td>
+                <td>Raspberry jam filled doughnut with powdered sugar dusted on top </td>
+                <td><img class="doughnuts_pic" src="images/jelly_filled.png" alt="White Sprinkled Doughnut"> </td>
+            </tr>
+            <tr>
+                <td>Strawberry White Chocolate Doughnut</td>
+                <td>Strawberry glazed doughnut with white chocolate shavings on top</td>
+                <td><img class="doughnuts_pic" src="images/strawberry_whitechoc.png" alt="White Sprinkled Doughnut"> </td>
+            </tr>
+          </table>
     </div>
 
-    <div id="AboutUs" class="tabcontent">
+    <div id="AboutUs" class="tabcontent"style="display: block;">
         <h3>About Us</h3>
-        <p>Tokyo is the capital of Japan.</p>
+        <p>Our Co-creators Mason Olchoway and Tahzib Yafi really enjoyed doughnuts. No matter the form or the style of doughnut, we like them all.
+            We created this doughnut delivery service so more people could enjoy our hand made doughnuts. We have been making doughnuts for at least 1 hour at this point.
+            We can't wait for you to make use rich.
+        </p>
     </div>
       
     <div id="Staff" class="tabcontent">
@@ -601,7 +646,7 @@
         <div class="selectoption" id="AddReport">
 
              <!--Current Customer textarea-->
-             <body onload="loadalltextarea();">
+             <br><body onload="loadalltextarea();">
                 <form>
                     <label for="customerDatabaseContent"><b>Current Customers in the Database</b></label>
                     <br>
@@ -621,7 +666,7 @@
 
             <h3>Add Customer Report</h3>
             <p>Fill in this form to add a report to a customer.</p>
-            <p>The Customer First and Lastname are required in order to add a report for the customer.</p></br></br></br>
+            <p>The Customer First and Lastname are required in order to add a report for the customer.</p>
             <form onSubmit="addreport();" class="inputform" id="UpdateStaffform">
                 <hr>
                 <label for="customer_firstname"><b>First Name:</b></label><br>
