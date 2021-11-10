@@ -57,10 +57,6 @@
 
             document.getElementById(select.value).style.display = "block";
         }
-
-        // Set the defaults 
-        document.getElementById("defaultTab").click();
-        document.getElementById('Reg/UpdateStaff').style.display = "block";
     
     </script>
 
@@ -68,7 +64,7 @@
     <!-- Scripts for messing with the databases-->
     <script>
 
-        // Gets the staff data and places it the staff content text area
+        // staff DOM functions
         function getstaff(){
             fetch('/getstaff')
             .then( function(response) { // After the response is recived 
@@ -84,7 +80,7 @@
                     // Get all content in the tabs and hide them
                     staffTextArea = document.getElementsByClassName("staffDatabaseContent");
                     for (i = 0; i < staffTextArea.length; i++) {
-                        staffTextArea[i].value = text; // hide all tab content
+                        staffTextArea[i].value = text;
                     }
 
 
@@ -172,16 +168,71 @@
         }
 
 
+
         // Function to load all of the text areas as onload only gets called on the first body tag
         function loadalltextarea(){
             getstaff();
             getcustomer();
+            getcustomerreports();
         }
 
 
-        // Scripts for the customer database
-        // Gets the staff data and places it the staff content text area
-        
+        // report DOM functions
+        function getcustomerreports(){
+
+            fetch('/getcustomerreports')
+            .then( function(response) { // After the response is recived 
+                if (response.status !== 200) {
+                    alert('Unable to get customer database. Status Code: ' + response.status);
+                    return;
+                }
+
+                return response.text().then(function(text) {
+
+                    var i, customerTextArea;
+
+                    // Get all content in the tabs and hide them
+                    customerTextArea = document.getElementsByClassName("customerReportDatabaseContent");
+                    for (i = 0; i < customerTextArea.length; i++) {
+                        customerTextArea[i].value = text;
+                    }
+
+                });
+                
+            }) 
+            .catch(function(err) { // If an error happened
+                console.log('Fetch Error :-S', err);
+            });   
+        }
+
+        function addreport(){
+
+            let firstname = document.getElementById('AddCustomerReportFname').value;
+            let lastname = document.getElementById('AddCustomerReportLname').value;
+            let order_report = document.getElementById('AddOrderReport').value;
+            const data = { firstname, lastname, order_report };
+
+
+            fetch('/addreport', { // Send the json data
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then( function(response) { // After the response is recived 
+                if (response.status !== 200) {
+                    alert('Unable to get customer database. Status Code: ' + response.status);
+                    return;
+                }
+                alert("Successfully Added a new customer report to the database");
+            })
+            .catch(function(err) { // If an error happened
+                console.log('Fetch Error :-S', err);
+            });   
+        }
+
+
+
+        // Customer DOM functions
         function getcustomer(){
 
             fetch('/getcustomer')
@@ -198,7 +249,7 @@
                     // Get all content in the tabs and hide them
                     customerTextArea = document.getElementsByClassName("customerDatabaseContent");
                     for (i = 0; i < customerTextArea.length; i++) {
-                        customerTextArea[i].value = text; // hide all tab content
+                        customerTextArea[i].value = text;
                     }
 
                  });
@@ -213,9 +264,8 @@
 
             let firstname = document.getElementById('AddCustomerFname').value;
             let lastname = document.getElementById('AddCustomereLname').value;
-            let order_details = document.getElementById('AddorderDetails').value;
             let order_amount = document.getElementById('AddCustomerOrderAmount').value;
-            const data = { firstname, lastname, order_details, order_amount };
+            const data = { firstname, lastname, order_amount };
 
 
             fetch('/addcustomer', { // Send the json data
@@ -238,11 +288,10 @@
         function updatecustomer(){
 
             let firstname = document.getElementById('UpdatecustomerFname').value;
-            let lastname = document.getElementById('UpdatestaffLname').value;
-            let order_details = document.getElementById('UpdatecustomerLname').value;
+            let lastname = document.getElementById('UpdatecustomerLname').value;
             let order_amount = document.getElementById('UpdateOrderAmount').value;
             let customerID = document.getElementById('UpdatecustomerID').value;
-            const data = { customerID, firstname, lastname, order_details, order_amount };
+            const data = { customerID, firstname, lastname, order_amount };
 
             fetch('/updatecustomer', { // Send the json data
                 method: 'PUT',
@@ -299,7 +348,6 @@
     </div>
       
     <div id="Staff" class="tabcontent">
-
         <!--Dropdown menu in the staff tab-->
         <select name="staffcommands" id="staff_functionality" onchange="showStaffFunctionality(this)">
             <option>---Select Option---</option>
@@ -312,6 +360,7 @@
             <option value="AllData">All Data</option>
             <option value="AddReport">Add Report</option>
         </select>
+
 
 
         <!-- Adding staff form  -->
@@ -439,9 +488,6 @@
                 <label for="customer_lastname"><b>Last Name:</b></label><br>
                 <input type="text" name="customer_lastname" id="AddCustomereLname"><br>
 
-                <label for="order_details"><b>Order Details:</b></label><br>
-                <input type="text" name="order_details" id="AddorderDetails"><br>
-
                 <label for="order_amount"><b>Order Amount:</b></label><br>
                 <input type="number" name="order_amount" id="AddCustomerOrderAmount">
                 <hr>
@@ -477,17 +523,13 @@
                 <label for="customer_lastname"><b>Last Name:</b></label><br>
                 <input type="text" name="customer_firstname" id="UpdatecustomerLname"><br>
 
-                <label for="order_details"><b>Order Details:</b></label><br>
-                <input type="text" name="order_details" id="UpdateOrderDetails"><br>
-
                 <label for="order_amount"><b>Order Amount:</b></label><br>
                 <input type="number" name="order_amount" id="UpdateOrderAmount">
                 <hr>
                 
-                <button class="submitbtn" type="submit" value="PUT">Update Staff</button><br>
+                <button class="submitbtn" type="submit" value="PUT">Update Customer</button><br>
             </form>
         </div>
-
 
         <!-- Delete customer form -->
         <div class="selectoption" id="DeleteCustomer">
@@ -515,6 +557,7 @@
             
         </div>
 
+
         
         <!-- All data. Customer and staff -->
         <div class="selectoption" id="AllData">
@@ -540,13 +583,59 @@
                     <button class="refreshbtn" type="submit" value="GET">Refresh</button>
                 </form>
             </body>
+
+            <!--Current Customer Reports textarea-->
+            <body onload="loadalltextarea();">
+                <form>
+                    <label for="customerReportDatabaseContent"><b>Current Customers Reports in the Database</b></label>
+                    <br>
+                    <textarea style="float:none; width: 800px; height: 200px;" disabled="true" class="customerReportDatabaseContent" id="customerReportDatabaseContent"></textarea>
+                    <button class="refreshbtn" type="submit" value="GET">Refresh</button>
+                </form>
+            </body>
             
             <hr>
         </div>
 
         <!-- Add a customer report form -->
         <div class="selectoption" id="AddReport">
+
+             <!--Current Customer textarea-->
+             <body onload="loadalltextarea();">
+                <form>
+                    <label for="customerDatabaseContent"><b>Current Customers in the Database</b></label>
+                    <br>
+                    <textarea style="float:none;" disabled="true" class="customerDatabaseContent" id="customerDatabaseContent"></textarea>
+                </form>
+            </body>
+
+            <!--Current Customer Reports textarea-->
+            <body onload="loadalltextarea();">
+                <form>
+                    <label for="customerReportDatabaseContent"><b>Current Customers Reports in the Database</b></label>
+                    <br>
+                    <textarea style="float:none;" disabled="true" class="customerReportDatabaseContent" id="customerReportDatabaseContent"></textarea>
+                    <button class="refreshbtn" type="submit" value="GET">Refresh</button>
+                </form>
+            </body>
+
             <h3>Add Customer Report</h3>
+            <p>Fill in this form to add a report to a customer.</p>
+            <p>The Customer First and Lastname are required in order to add a report for the customer.</p></br></br></br>
+            <form onSubmit="addreport();" class="inputform" id="UpdateStaffform">
+                <hr>
+                <label for="customer_firstname"><b>First Name:</b></label><br>
+                <input type="text" name="customer_firstname" id="AddCustomerReportFname" required><br>
+
+                <label for="customer_lastname"><b>Last Name:</b></label><br>
+                <input type="text" name="customer_firstname" id="AddCustomerReportLname" required><br>
+
+                <label for="order_report"><b>Order Report:</b></label><br>
+                <input type="text" name="order_report" id="AddOrderReport">
+                <hr>
+                
+                <button class="submitbtn" type="submit" value="POST">Add Report</button><br>
+            </form>
 
         </div>
 

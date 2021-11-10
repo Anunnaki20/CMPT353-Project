@@ -34,6 +34,10 @@ connection.connect((err) => {
   }
 });
 
+//----------------------------------------
+
+
+
 /* Table for the staff
 CREATE TABLE customer(staff_ID INT unsigned NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(255) NOT NULL,
@@ -57,7 +61,6 @@ CREATE TABLE customer(staff_ID INT unsigned NOT NULL AUTO_INCREMENT,
 CREATE TABLE customer(customer_ID INT unsigned NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(255) NOT NULL,
   lastname VARCHAR(255),
-  order_details VARCHAR(1000),
   order_amount INT unsigned,
   PRIMARY KEY (customer_ID) );
 +---------------+------------------+------+-----+---------+----------------+
@@ -65,11 +68,29 @@ CREATE TABLE customer(customer_ID INT unsigned NOT NULL AUTO_INCREMENT,
 +---------------+------------------+------+-----+---------+----------------+
 | customer_ID   | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
 | firstname     | varchar(255)     | NO   |     | NULL    |                |
-| lastname      | varchar(255)     | YES  |     | NULL    |                |
-| order_details | varchar(1000)    | YES  |     | NULL    |                |
+| lastname      | varchar(255)     | YES  |     | NULL    |                |    
 | order_amount  | int(10) unsigned | YES  |     | NULL    |                |
 +---------------+------------------+------+-----+---------+----------------+
 */
+
+/* Table for customer_reports
+CREATE TABLE customer_reports (firstname VARCHAR(255) NOT NULL,
+    lastname VARCHAR(255) NOT NULL,
+    report VARCHAR(10000),
+    PRIMARY KEY (lastname));
++-----------+----------------+------+-----+---------+-------+
+| Field     | Type           | Null | Key | Default | Extra |
++-----------+----------------+------+-----+---------+-------+
+| firstname | varchar(255)   | NO   |     | NULL    |       |
+| lastname  | varchar(255)   | NO   | PRI | NULL    |       |
+| report    | varchar(10000) | YES  |     | NULL    |       |
++-----------+----------------+------+-----+---------+-------+
+*/
+
+
+
+
+//--------------------------STAFF Functions--------------------------------
 
 function addstaff( firstname, lastname, title, salary ){
 
@@ -121,12 +142,14 @@ function deletestaff( staffID ){
 
   console.log("Deleted staff");
 }
+//--------------------------------------------------------------------------
 
 
 
-function addcustomer(firstname, lastname, order_details, order_amount){
+//-------------------------CUSTOMER FUNCTIONS-------------------------------
+function addcustomer(firstname, lastname, order_amount){
   // The MYSQL command to insert the topic, data, and timestamp of the post into the posts table
-  var sql = "INSERT INTO customer (firstname, lastname, order_details, order_amount) VALUES ('" + firstname +"', '"+ lastname +"', '" + order_details +"', '" + order_amount + "')";
+  var sql = "INSERT INTO customer (firstname, lastname, order_amount) VALUES ('" + firstname +"', '"+ lastname +"', '" + order_amount + "')";
 
   connection.query(sql, function (err, result) {
       if (err) { throw err; }
@@ -134,7 +157,7 @@ function addcustomer(firstname, lastname, order_details, order_amount){
   });
 }
 
-function updatecustomer( customerID, firstname, lastname, order_details, order_amount ){
+function updatecustomer( customerID, firstname, lastname, order_amount ){
 
   if (firstname.length > 0){
     var sql = "UPDATE customer SET firstname='" + firstname +"' WHERE customer_ID=" + customerID;
@@ -144,12 +167,6 @@ function updatecustomer( customerID, firstname, lastname, order_details, order_a
   }
   if (lastname.length > 0){
     var sql = "UPDATE customer SET lastname='" + lastname +"' WHERE customer_ID=" + customerID;
-    connection.query(sql, function (err, result) {
-      if (err) { throw err; }
-    });
-  }
-  if (order_details.length > 0){
-    var sql = "UPDATE customer SET order_details='" + order_details +"' WHERE customer_ID=" + customerID;
     connection.query(sql, function (err, result) {
       if (err) { throw err; }
     });
@@ -173,10 +190,27 @@ function deletecustomer( customerID ){
 
   console.log("Deleted staff");
 }
+//--------------------------------------------------------------------------
 
-//----------------------------------------
 
-//------------ Stuff for messing with the staff databse ------------
+
+//-------------------------REPORT FUNCTIONS---------------------------------
+
+function addreport(firstname, lastname, order_report){
+  // The MYSQL command to insert the topic, data, and timestamp of the post into the posts table
+  var sql = "INSERT INTO customer_reports (firstname, lastname, report) VALUES ('" + firstname +"', '"+ lastname +"', '" + order_report + "')";
+
+  connection.query(sql, function (err, result) {
+      if (err) { throw err; }
+      console.log("New Report added");
+  });
+}
+//------------------------------------------------------------------------
+
+
+
+
+//------------ Stuff for messing with the staff database ------------
 app.post("/addstaff", function(req, res) {
 
     addstaff(req.body.firstname, req.body.lastname, req.body.title, req.body.salary );
@@ -225,12 +259,15 @@ app.delete("/deletestaff", function(req, res) {
   deletestaff( req.body.staffID );
   res.sendStatus(200);
 });
-//----------------------------------------------------- ------------
+//---------------------------------------------------------------------
 
-//------------ Stuff for messing with the customer databse ------------
+
+
+
+//------------ Stuff for messing with the customer database ------------
 app.post("/addcustomer", function(req, res) {
 
-  addcustomer(req.body.firstname, req.body.lastname, req.body.order_details, req.body.order_amount );
+  addcustomer(req.body.firstname, req.body.lastname, req.body.order_amount );
   res.sendStatus(200);;
 });
 
@@ -256,7 +293,6 @@ app.get("/getcustomer", function(req, res) {
       // Get the data and timestamp
       customer_data += "" + row.firstname + " ";
       customer_data += "" + row.lastname + ", ";
-      customer_data += "Order Details: " + row.order_details +", ";
       customer_data += "Order Amount: " + row.order_amount +"\n";
   });
 
@@ -267,7 +303,7 @@ app.get("/getcustomer", function(req, res) {
 });
 
 app.put("/updatecustomer", function(req, res) {
-  updatecustomer(req.body.customerID, req.body.firstname, req.body.lastname, req.body.order_details, req.body.order_amount );
+  updatecustomer(req.body.customerID, req.body.firstname, req.body.lastname, req.body.order_amount );
   res.sendStatus(200);
 });
 
@@ -275,7 +311,47 @@ app.delete("/deletecustomer", function(req, res) {
   deletecustomer( req.body.customerID );
   res.sendStatus(200);
 });
-//----------------------------------------------------- ------------
+//------------------------------------------------------------------
+
+
+
+//--------------Stuff for messing witht the report database---------
+app.get("/getcustomerreports", function(req, res) {
+  var sql = "SELECT * FROM customer_reports";
+
+  connection.query(sql, function (err, result) {
+    if (err) throw err;
+    let customer_report = "";
+
+  // Get the data from the keys
+  Object.keys(result).forEach(function(key) {
+      var row = result[key];
+
+      // Get the topic
+      if (customer_report.length <= 0){
+        customer_report = "" + row.firstname + ", ";
+      }
+      else {
+        customer_report += "" + row.firstname + ", ";
+      }
+      
+      // Get the data and timestamp
+      customer_report += "" + row.lastname + ", ";
+      customer_report += "REPORT: " + row.report +"\n";
+  });
+
+  console.log("Retrevied Customer Report");
+  res.send(customer_report);
+});
+
+});
+
+app.post("/addreport", function(req, res) {
+
+  addreport(req.body.firstname, req.body.lastname, req.body.order_report );
+  res.sendStatus(200);;
+});
+//------------------------------------------------------------------
 
 
 
