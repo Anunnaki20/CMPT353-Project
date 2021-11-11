@@ -39,7 +39,7 @@ connection.connect((err) => {
 
 
 /* Table for the staff
-CREATE TABLE customer(staff_ID INT unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE staff(staff_ID INT unsigned NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(255) NOT NULL,
   lastname VARCHAR(255) NOT NULL,
   title VARCHAR(255) NOT NULL,
