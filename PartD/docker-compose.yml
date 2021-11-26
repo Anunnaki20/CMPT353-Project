@@ -6,6 +6,6 @@ services:
     build: backend
     command: python manage.py runserver 0.0.0.0:8080
     volumes:
-      - ./PartD/backend:/code
+      - ./backend:/code
     ports:
       - "8080:8080"
