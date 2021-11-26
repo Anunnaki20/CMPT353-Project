@@ -1,14 +1,14 @@
 /* header styling*/
 .header {
-  padding: 10px;
-  text-align: left;
-  background: #2f3635;
-  color: white;
-  font-size: 20px;
-  font-family: Helvetica, sans-serif;
-  margin-top: -10px;
-  margin-left: -10px;
-  margin-right: -10px;
+    padding: 40px;
+    text-align: left;
+    background: #2f3635;
+    color: white;
+    font-size: 20px;
+    font-family: Helvetica, sans-serif;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-right: -10px; 
 }
 
 h3 {
@@ -35,27 +35,26 @@ p {
 
 /* Style the tab */
 .tab {
-  display: flex;
-  justify-content: space-around;
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-  clear: right;
-}
-
-/* Style the buttons that are used to open the tab content */
+    display: flex;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    clear: right;
+  }
+  
+  /* Style the buttons that are used to open the tab content */
 .tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 15px 15px;
-  transition: 0.3s;
-  margin-left: -10px;
-}
-
-/* Change background color of buttons on hover */
+	flex:auto;
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 40px 0px;
+    transition: 0.3s;
+    margin-left: -10px;
+  }
+  
 .tab button:hover {
   background-color: #ddd;
 }
