@@ -9,10 +9,10 @@ COPY requirements.txt /
 RUN pip install -r /requirements.txt
 
 # Set work directory.
-RUN mkdir /code
-WORKDIR /code
+RUN mkdir /website
+WORKDIR /website
 
-# Copy project code.
-COPY . /code/
+# Copy project website.
+COPY . /website/
 
 EXPOSE 8080
