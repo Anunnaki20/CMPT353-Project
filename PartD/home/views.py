@@ -22,7 +22,7 @@ def about(request):
 
 
 def userProfile(request):
-    prev_orders = report.objects.filter(customer = request.user.username)
+    prev_orders = report.objects.filter(customer = request.user)
     context = {'prev_orders' : prev_orders}
     return render(request, 'profile.html', context)
 

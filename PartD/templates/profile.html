@@ -5,6 +5,18 @@
 
 <h1>{{user.username}}</h1>
 
-<!-- {{ prev_orders.as_p }} -->
+<div>
+{% if prev_orders%}
+
+    {% for i in prev_orders %}
+        <li>{{i.report}}</li>
+    {% endfor %}
+
+{% else %}
+
+<p>No previous orders</p>
+
+{%endif%}
+</div>
 
 {% endblock %}
