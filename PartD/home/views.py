@@ -26,10 +26,15 @@ def userProfile(request):
     context = {'prev_orders' : prev_orders}
     return render(request, 'profile.html', context)
 
+# def adminStaff(request):
+#     return render(request, 'admin')
 
+# ---------------------------Login Stuff Below-------------------------------------
 
 def loginPage(request):
     page = 'login'
+
+    # If the user is already loged in and they try to go back to login page, send them to homepage
     if request.user.is_authenticated:
         return redirect('homepage')
 
@@ -58,17 +63,22 @@ def loginPage(request):
     return render(request, 'signup_login.html', context)
 
 
+# Logout the Customer
 def logoutCustomer(request):
     logout(request)
     return redirect('homepage')
 
-
+# Register a new Customer
 def registerPage(request):
     form = UserCreationForm()
     context = {'form' : form}
 
     if request.method == 'POST':
+        # Send POST data to the UserCreationForm
         form = UserCreationForm(request.POST)
+
+        # If the form inputs are valid save the user and login them in and send them to the homepage
+        # Else display an error
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
