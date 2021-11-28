@@ -1,4 +1,64 @@
+.info{
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    justify-content: center;
+    padding: 0px 5px;
+}
 
-body{
-    background-color:aquamarine
+a.doughnut:hover, a.owner:hover, a.profileLink:hover, a.logoutLink:hover {
+    color: black;
+}
+
+.doughnut{
+    padding: 60px 40px;
+    color: white;
+    text-decoration: none;
+}
+
+.owner{
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.tab {
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #eec0c6;
+    background-image: linear-gradient(315deg, #eec0c6 0%, #e58c8a 74%); 
+    font-family: Arial, Helvetica, sans-serif;
+    /* clear: right; */
+}
+
+.logo{
+    width: 100px;
+    height: 100px;
+}
+
+
+.title{
+    padding-left: 12rem;
+    color: hsl(268, 70%, 37%);
+    font-size: 2.5rem;
+}
+
+.admin{
+    display: flex;
+    align-items: center;
+    padding: 0px 30px;
+    flex-direction: column;
+    color: white;
+}
+
+.profileLink, .logoutLink{
+    color: white;
+    text-decoration: none;
+}
+
+.helloUser{
+    font-size: 1.5rem;
+    color: rgb(67, 22, 189);
 }

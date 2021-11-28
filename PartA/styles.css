@@ -44,7 +44,7 @@ p {
   
   /* Style the buttons that are used to open the tab content */
 .tab button {
-	flex:auto;
+	  flex:auto;
     background-color: inherit;
     float: left;
     border: none;
