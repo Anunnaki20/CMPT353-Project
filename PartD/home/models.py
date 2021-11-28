@@ -3,6 +3,18 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+STAFF_CHOICES = (
+    ('selectoption','---Select Option---'),
+    ('addstaff','Add Staff'),
+    ('updatestaff','Update Staff'),
+    ('delstaff','Delete Staff'),
+    ('alldata','All Data'),
+    ('addreport','Add Report'),
+)
+
+class dropDownList(models.Model):
+    options = models.CharField(max_length=20, choices=STAFF_CHOICES, default='selectoption')
+    
 class staff(models.Model):
     firstname = models.CharField(max_length=255, null=False)
     lastname = models.CharField(max_length=255, null=False)

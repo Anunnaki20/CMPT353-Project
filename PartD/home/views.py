@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.decorators import login_required
+from .staff import dropDownForm
+#from .models import staff,customer_report
 
 
 def homepage(request):
@@ -17,6 +19,11 @@ def doughnuts(request):
 def about(request):
     return render(request, 'about.html')
 
+def dropDownView(request):
+    form = dropDownForm()
+    context = {'form': form}
+    return render(request, 'staff_dropdown_list.html', context)
+    
 
 def loginPage(request):
     if request.method == 'POST':
