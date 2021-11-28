@@ -6,28 +6,24 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from home.models import customer_report as report
+from home.forms import UserSignUpForm
 
 
 def homepage(request):
     return render(request, 'homepage.html')
 
-
-@login_required(login_url="login") # REMOVE WHEN STAFF STUFF IS ADDED
 def doughnuts(request):
     return render(request, 'doughnuts.html')
-
 
 def about(request):
     return render(request, 'about.html')
 
-
+@login_required(login_url="login")
 def userProfile(request):
     prev_orders = report.objects.filter(customer = request.user)
     context = {'prev_orders' : prev_orders}
     return render(request, 'profile.html', context)
 
-# def adminStaff(request):
-#     return render(request, 'admin')
 
 # ---------------------------Login Stuff Below-------------------------------------
 
@@ -70,12 +66,12 @@ def logoutCustomer(request):
 
 # Register a new Customer
 def registerPage(request):
-    form = UserCreationForm()
+    form = UserSignUpForm()
     context = {'form' : form}
 
     if request.method == 'POST':
         # Send POST data to the UserCreationForm
-        form = UserCreationForm(request.POST)
+        form = UserSignUpForm(request.POST)
 
         # If the form inputs are valid save the user and login them in and send them to the homepage
         # Else display an error
