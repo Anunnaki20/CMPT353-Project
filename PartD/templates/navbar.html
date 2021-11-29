@@ -11,7 +11,7 @@
     </div>
     
     {% if request.user.is_staff %}
-    <a href="/admin"> Admin</a>
+    <a class="adminLink" href="/admin">Admin</a>
     {% endif %}
     
     {% if request.user.is_authenticated %}
@@ -21,7 +21,7 @@
         <a class="logoutLink" href="{% url 'logout' %}">Logout</a>
     </div>
     {% else %}
-        <a href="{% url 'login' %}">Login</a>
+        <a class="loginLink" href="{% url 'login' %}">Login</a>
     {% endif %}
     
 </div>

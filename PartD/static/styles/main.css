@@ -6,21 +6,13 @@
     padding: 0px 5px;
 }
 
-a.doughnut:hover, a.owner:hover, a.profileLink:hover, a.logoutLink:hover {
-    color: black;
+a.profileLink:hover, a.logoutLink:hover, a.doughnut:hover, a.owner:hover, a.loginLink:hover, a.adminLink:hover {
+    background-color: rgb(175, 34, 9);
 }
 
-.doughnut{
-    padding: 60px 40px;
-    color: white;
-    text-decoration: none;
-}
-
-.owner{
-    padding: 20px;
-    color: white;
-    text-decoration: none;
-}
+a.profileLink:active {
+    color: rgb(248, 248, 134);
+} 
 
 .tab {
     display: flex;
@@ -30,7 +22,6 @@ a.doughnut:hover, a.owner:hover, a.profileLink:hover, a.logoutLink:hover {
     background-color: #eec0c6;
     background-image: linear-gradient(315deg, #eec0c6 0%, #e58c8a 74%); 
     font-family: Arial, Helvetica, sans-serif;
-    /* clear: right; */
 }
 
 .logo{
@@ -42,7 +33,7 @@ a.doughnut:hover, a.owner:hover, a.profileLink:hover, a.logoutLink:hover {
 .title{
     padding-left: 12rem;
     color: black;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 2.5rem;
 }
 
@@ -54,7 +45,7 @@ a.doughnut:hover, a.owner:hover, a.profileLink:hover, a.logoutLink:hover {
     color: white;
 }
 
-.profileLink, .logoutLink{
+.doughnut, .owner, .profileLink, .logoutLink, .loginLink, .adminLink{
     background-color: rgb(231, 122, 20);
     padding: 1.5rem;
     border-radius: 20px;
@@ -62,13 +53,25 @@ a.doughnut:hover, a.owner:hover, a.profileLink:hover, a.logoutLink:hover {
     text-decoration: none;
 }
 
+
+.doughnut{
+    margin: 1rem;
+}
+
 .logoutLink{
     padding: 1.5rem 5rem;
 }
 
+.loginLink, .adminLink{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    padding: 2rem;
+}
+
 .helloUser{
     font-size: 1.5rem;
-    color: rgb(67, 22, 189);
+    color: rgb(28, 4, 92);
 }
 
 .doughnuts_pic{
@@ -91,7 +94,7 @@ a.doughnut:hover, a.owner:hover, a.profileLink:hover, a.logoutLink:hover {
 
 .doughnut_list{
     text-align: center;
-    font-family: cursive;
+    font-family:monospace;
     font-size: 1.5rem;
     padding: 10px 0;
     background-color: #fad0c4;
@@ -102,4 +105,77 @@ table{
     padding: 2rem 0;
     margin-left: auto;
     margin-right: auto;
+}
+
+.tabcontent{
+    /* text-align: center; */
+    color: black;
+    padding: 9rem 9rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-image: url("/static/images/doughnut_background.jpg");
+    background-size: auto;
+}
+
+.AboutUsTitle{
+    padding-top: 1.5rem;
+    background-color: rgba(255, 255, 255, .8);
+    border-radius: 20px;
+    color:black;
+    text-align: center;
+    font-size: 2rem;
+    box-shadow: 10px 10px 5px;
+}
+
+.AboutUs{
+    font-size: 1.5rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 1rem;
+    word-spacing: 0.2rem;
+}
+
+.login{
+    background-image: url("/static/images/signup_background.jpg");
+    background-size: auto;
+    padding: 9.5rem;
+}
+
+.login_info{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+}
+
+.login_username, .login_password{
+    padding-top: 2.5rem;
+}
+
+.login_button{
+    margin: 1.5rem;
+    padding: 0.5rem 7rem;
+    border-radius: 0.5rem;
+    background-color: orchid;
+    color: white;
+}
+
+.login_button:hover{
+    background-color: rgb(207, 22, 124);
+    cursor: pointer;
+}
+
+.signup_query{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+}
+
+.signup{
+    text-decoration: none;
+    color: rgb(139, 102, 240);
+    cursor: pointer;
+}
+
+.signup:hover{
+    color:rgb(41, 9, 131);
 }
