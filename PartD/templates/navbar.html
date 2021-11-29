@@ -4,32 +4,25 @@
     <div class="info">
         <a class="doughnut" href="{% url 'doughnuts' %}"> Doughnuts</a>
         <a class="owner" href="{% url 'about' %}"> About Us</a>
-   
 
+        <!-- Shop name and it's logo -->
+        <p class="title"><b>Doughnut Mind If I Do</b></p>
+        <img class="logo" src="{% static 'images/logo.png' %}" alt="LOGO">
+    </div>
     
-    <!-- Shop name and it's logo -->
-    <p class="title"><b>Doughnut Mind If I Do</b></p>
-    <img class="logo" src="{% static 'images/logo.png' %}" alt="LOGO">
-</div>
+    {% if request.user.is_staff %}
+    <a href="/admin"> Admin</a>
+    {% endif %}
     
-        {% if request.user.is_staff %}
-        <a href="/admin"> Admin</a>
-        {% endif %}
-        
-        {% if request.user.is_authenticated %}
-        <div class="admin">
-            <p class="helloUser">Hello {{request.user}}!</p>
-            <a class="profileLink" href="{% url 'user_profile' %}">{{request.user}}'s Profile</a><br>
-            <a class="logoutLink" href="{% url 'logout' %}">Logout</a>
-        </div>
-        {% else %}
-            <a href="{% url 'login' %}">Login</a>
-        {% endif %}
+    {% if request.user.is_authenticated %}
+    <div class="admin">
+        <p class="helloUser">Hello {{request.user}}!</p>
+        <a class="profileLink" href="{% url 'user_profile' %}">{{request.user}}'s Profile</a><br>
+        <a class="logoutLink" href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
     
-
 </div>
 
-
-
-
-<hr>
