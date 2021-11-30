@@ -36,12 +36,15 @@
         {% csrf_token %}
 
         {{ form.as_p }}
-
-        <input type="submit" value="Register" />
+        <div class="register_info">
+            <input class="register" type="submit" value="Register"/>
+        </div>
     </form>
 
-    <p>Already signed up?</p>
-    <a href="{% url 'login' %}">Log in</a>
+    <div class="signup_query">
+        <p>Already signed up?</p>
+        <a class="login_button" href="{% url 'login' %}">Log in</a>
+    </div>
 </div>
 
 

@@ -4,10 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from home.models import customer_report as report
 from home.forms import UserSignUpForm
-
 
 def homepage(request):
     return render(request, 'homepage.html')
@@ -32,7 +30,7 @@ def loginPage(request):
 
     # If the user is already loged in and they try to go back to login page, send them to homepage
     if request.user.is_authenticated:
-        return redirect('homepage')
+        return redirect('doughnuts')
 
     if request.method == 'POST':
 
@@ -50,7 +48,7 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('homepage')
+            return redirect('doughnuts')
         else:
             messages.error(request, 'Username OR Password does not exist')
 
@@ -62,7 +60,8 @@ def loginPage(request):
 # Logout the Customer
 def logoutCustomer(request):
     logout(request)
-    return redirect('homepage')
+    context = {'page' : 'login'}
+    return render(request, 'signup_login.html', context)
 
 # Register a new Customer
 def registerPage(request):

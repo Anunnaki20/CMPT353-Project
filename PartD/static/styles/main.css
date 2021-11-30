@@ -19,8 +19,8 @@ a.profileLink:active {
     justify-content: space-between;
     overflow: hidden;
     border: 1px solid #ccc;
-    background-color: #eec0c6;
-    background-image: linear-gradient(315deg, #eec0c6 0%, #e58c8a 74%); 
+    background-color: #f39f86;
+    background-image: linear-gradient(35deg, #f39f86 0%, #f5bf79 74%); 
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -60,6 +60,7 @@ a.profileLink:active {
 
 .logoutLink{
     padding: 1.5rem 5rem;
+    margin-bottom: 1rem;
 }
 
 .loginLink, .adminLink{
@@ -67,6 +68,7 @@ a.profileLink:active {
     justify-content: center;
     align-self: center;
     padding: 2rem;
+    margin: 1rem;
 }
 
 .helloUser{
@@ -139,7 +141,7 @@ table{
     padding: 9.5rem;
 }
 
-.login_info{
+.login_info, .register_info{
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -151,7 +153,10 @@ table{
     padding-top: 2.5rem;
 }
 
-.login_button{
+.login_button, .register{
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
     margin: 1.5rem;
     padding: 0.5rem 7rem;
     border-radius: 0.5rem;
@@ -159,7 +164,7 @@ table{
     color: white;
 }
 
-.login_button:hover{
+.login_button:hover, .register:hover{
     background-color: rgb(207, 22, 124);
     cursor: pointer;
 }
@@ -178,4 +183,10 @@ table{
 
 .signup:hover{
     color:rgb(41, 9, 131);
+}
+
+.profileBody{
+    padding: 2rem 2rem 22rem 2rem;
+    background-color: #ffcfdf;
+    background-image: linear-gradient(315deg, #ffcfdf 0%, #b0f3f1 74%);
 }
