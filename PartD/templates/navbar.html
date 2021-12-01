@@ -1,28 +1,30 @@
 {% load static %}
 
-<div class="tab">
-    <div class="info">
-        <a class="doughnut" href="{% url 'doughnuts' %}"> Doughnuts</a>
-        <a class="owner" href="{% url 'about' %}"> About Us</a>
 
-        <!-- Shop name and it's logo -->
-        <p class="title"><b>Doughnut Mind If I Do</b></p>
-        <img class="logo" src="{% static 'images/logo.png' %}" alt="LOGO">
+    <div class="info">
+        <div class="helloUser">
+            <div class="shop_desc">
+                <p class="title"><b>Doughnut Mind If I Do</b></p>
+                <p class="subtitle">THE BEST DOUGHNUTS ON WHEEL SERVICE</p> 
+            </div>
+            <p>Hello {{request.user}}!</p>
+        </div>
     </div>
-    
-    {% if request.user.is_staff %}
-    <a class="adminLink" href="/admin">Admin</a>
-    {% endif %}
-    
-    {% if request.user.is_authenticated %}
-    <div class="admin">
-        <p class="helloUser">Hello {{request.user}}!</p>
-        <a class="profileLink" href="{% url 'user_profile' %}">{{request.user}}'s Profile</a><br>
-        <a class="logoutLink" href="{% url 'logout' %}">Logout</a>
+
+    <div class="tab">
+        <a class="doughnut" href="{% url 'doughnuts' %}"> DOUGHNUTS</a>
+        <a class="owner" href="{% url 'about' %}"> ABOUT US</a>
+        
+        {% if request.user.is_staff %}
+        <a class="adminLink" href="/admin">ADMIN</a>
+        {% endif %}
+        
+        {% if request.user.is_authenticated %}
+            <a class="profileLink" href="{% url 'user_profile' %}">{{request.user}}'s Profile</a><br>
+            <a class="logoutLink" href="{% url 'logout' %}">LOGOUT</a>
+        {% else %}
+            <a class="loginLink" href="{% url 'login' %}">LOGIN</a>
+        {% endif %}
     </div>
-    {% else %}
-        <a class="loginLink" href="{% url 'login' %}">Login</a>
-    {% endif %}
-    
-</div>
+
 

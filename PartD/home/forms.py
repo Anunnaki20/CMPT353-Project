@@ -17,26 +17,3 @@ class UserSignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['email', 'first_name', 'last_name', 'username', 'password1', 'password2']
-        # widgets = {
-        #     'email': EmailInput(attrs={
-        #         'class': "form-control", 
-        #         'style': 'max-width: 300px; font-family: Arial, Helvetica, sans-serif; margin: 0.4rem;',
-        #         'placeholder': 'Email'
-        #     }),
-        #     'first_name': TextInput(attrs={
-        #         'class': "form-control",
-        #         'style': 'max-width: 300px; margin: 0.4rem;',
-        #         'placeholder': 'First Name'
-        #     }),
-        #     'last_name': TextInput(attrs={
-        #         'class': "form-control",
-        #         'style': 'max-width: 300px; margin: 0.4rem;',
-        #         'placeholder': 'Last Name'
-        #     }),
-
-        #     'username': TextInput(attrs={
-        #         'class': "form-control",
-        #         'style': 'max-width: 300px; margin: 0.4rem;',
-        #         'placeholder': 'Username'
-        #     }),
-        # }

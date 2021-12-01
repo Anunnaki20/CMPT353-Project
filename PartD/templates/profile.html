@@ -4,14 +4,17 @@
 {% block content %}
 <div class="profileBody">
 
-<p class="helloUser">{{user.username}}</p>
+<p class="userName">{{user.username}}</p>
 
 {% if prev_orders%}
-
-    <p>Previous Orders</p>
-    {% for i in prev_orders %}
-        <li>{{i.report}}</li>
-    {% endfor %}
+    
+    <p><u>Previous Orders</u></p>
+    
+    <div class="prev_orders">
+        {% for i in prev_orders %}
+            <li>{{i.report}}</li>
+        {% endfor %}
+    </div>
 
 {% else %}
 

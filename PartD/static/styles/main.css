@@ -1,3 +1,51 @@
+body{
+    background-image: url("/static/images/wooden_backgound.jpg");
+}
+
+@font-face {
+    font-family: 'dancing_script';
+    src: url('/static/fonts/DancingScript-Regular.otf');
+}
+
+.messages{
+    color: white;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+}
+
+.helloUser{
+    display: flex;
+    flex-direction: row;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.title, .current_doughnuts, .AboutUsTitle, .userName{
+    padding-left: 1rem;
+    color: white;
+    font-family: dancing_script;
+    font-size: 3rem;
+    margin: 0rem;
+}
+
+.current_doughnuts{
+    font-weight: 500;
+}
+
+.subtitle{
+    text-align: center;
+    margin: 0rem;
+    font-size: 1rem;
+    color: orange;
+}
+
+.shop_desc{
+    padding-left: 16rem;
+    display: flex;
+    flex-direction: column;
+    margin: 0 8rem;
+}
+
 .info{
     display: flex;
     align-items: center;
@@ -5,75 +53,33 @@
     justify-content: center;
     padding: 0px 5px;
 }
-
+ 
 a.profileLink:hover, a.logoutLink:hover, a.doughnut:hover, a.owner:hover, a.loginLink:hover, a.adminLink:hover {
-    background-color: rgb(175, 34, 9);
+    background-color: rgb(29, 5, 1);
 }
 
 a.profileLink:active {
     color: rgb(248, 248, 134);
 } 
 
-.tab {
-    display: flex;
-    justify-content: space-between;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f39f86;
-    background-image: linear-gradient(35deg, #f39f86 0%, #f5bf79 74%); 
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.logo{
-    width: 100px;
-    height: 100px;
-}
-
-
-.title{
-    padding-left: 12rem;
-    color: black;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 2.5rem;
-}
-
-.admin{
+.tab{
     display: flex;
     align-items: center;
-    padding: 0px 30px;
-    flex-direction: column;
+    justify-content: center;
+    flex-direction: row;
     color: white;
 }
 
 .doughnut, .owner, .profileLink, .logoutLink, .loginLink, .adminLink{
-    background-color: rgb(231, 122, 20);
-    padding: 1.5rem;
-    border-radius: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    background-color: #ffa69e;
+    background-image: linear-gradient(350deg, #a1684e9d 0%, #554341f1 74%);
+    padding: 1.5rem 2.5rem;
+    margin-top: 2rem;
+    border: 1px solid black;
     color: white;
     text-decoration: none;
-}
-
-
-.doughnut{
-    margin: 1rem;
-}
-
-.logoutLink{
-    padding: 1.5rem 5rem;
-    margin-bottom: 1rem;
-}
-
-.loginLink, .adminLink{
-    display: flex;
-    justify-content: center;
-    align-self: center;
-    padding: 2rem;
-    margin: 1rem;
-}
-
-.helloUser{
-    font-size: 1.5rem;
-    color: rgb(28, 4, 92);
 }
 
 .doughnuts_pic{
@@ -85,62 +91,51 @@ a.profileLink:active {
 }
 
 .doughnut_name{
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:cursive;
     padding: 3rem 1rem;
     text-align: left;
     font-size: 1.5rem;
 }
 
 .doughnut_desc{
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1rem;
 }
 
-.doughnut_list{
+.doughnut_list, .tabcontent, .profileBody, .login{
+    max-width: 55%;
+    margin: auto;
     text-align: center;
+    background-color: #bc986a;    
     font-family:monospace;
     font-size: 1.5rem;
-    padding: 10px 0;
-    background-color: #fad0c4;
-    background-image: linear-gradient(315deg, #fad0c4 0%, #f1a7f1 74%);    
+    padding: 10px 0;  
+}
+
+.tabcontent{
+    padding: 10px 0 0 0;
 }
 
 table{
-    padding: 2rem 0;
     margin-left: auto;
     margin-right: auto;
 }
 
-.tabcontent{
-    /* text-align: center; */
-    color: black;
-    padding: 9rem 9rem;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background-image: url("/static/images/doughnut_background.jpg");
-    background-size: auto;
-}
-
-.AboutUsTitle{
-    padding-top: 1.5rem;
-    background-color: rgba(255, 255, 255, .8);
-    border-radius: 20px;
-    color:black;
-    text-align: center;
-    font-size: 2rem;
-    box-shadow: 10px 10px 5px;
-}
-
 .AboutUs{
     font-size: 1.5rem;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    padding: 1rem;
+    color: black;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: justify;
+    padding: 0.5rem 2rem;
     word-spacing: 0.2rem;
 }
 
-.login{
+/* .login{
     background-image: url("/static/images/signup_background.jpg");
     background-size: auto;
     padding: 9.5rem;
-}
+} */
 
 .login_info, .register_info{
     display: flex;
@@ -180,16 +175,22 @@ table{
 
 .signup{
     text-decoration: none;
-    color: rgb(139, 102, 240);
+    color: rgb(50, 11, 156);
     cursor: pointer;
 }
 
 .signup:hover{
-    color:rgb(41, 9, 131);
+    color:rgb(10, 2, 32);
 }
 
-.profileBody{
-    padding: 2rem 2rem 22rem 2rem;
-    background-color: #ffcfdf;
-    background-image: linear-gradient(315deg, #ffcfdf 0%, #b0f3f1 74%);
+li{
+    list-style:square;
 }
+
+.prev_orders{
+    display: flex;
+    padding-left: 12rem;
+    text-align: left;
+    flex-direction: column;
+}
+

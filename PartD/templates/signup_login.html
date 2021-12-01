@@ -1,11 +1,17 @@
 {% extends 'main.html' %}
 
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 
 {% block content %}
 
 <div class="login">
 {% if page == 'login'  %}
-
     <form method="POST" action="">
         {% csrf_token %}
 
@@ -35,12 +41,6 @@
     <form method="POST" action="">
         {% csrf_token %}
 
-        <!-- {{ form.first_name }}
-        {{ form.last_name }}
-        {{ form.email }}
-        {{ form.username }}
-        {{ form.password1 }}
-        {{ form.password2 }} -->
         {{ form.as_p }}
     <input class="register" type="submit" value="Register"/>
     </form>
@@ -53,9 +53,6 @@
 </div>
 
 
-
-
 {% endif %}
-
 
 {% endblock %}

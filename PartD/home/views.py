@@ -28,7 +28,7 @@ def userProfile(request):
 def loginPage(request):
     page = 'login'
 
-    # If the user is already loged in and they try to go back to login page, send them to homepage
+    # If the user is already logged in and they try to go back to login page, send them to homepage
     if request.user.is_authenticated:
         return redirect('doughnuts')
 
@@ -60,8 +60,7 @@ def loginPage(request):
 # Logout the Customer
 def logoutCustomer(request):
     logout(request)
-    context = {'page' : 'login'}
-    return render(request, 'signup_login.html', context)
+    return redirect('login')
 
 # Register a new Customer
 def registerPage(request):
@@ -80,7 +79,7 @@ def registerPage(request):
             login(request, user)
             return redirect('homepage')
         else:
-            messages.error(request, 'An error occured during sign up')
+            messages.error(request, 'Password does not match')
 
 
     return render(request, 'signup_login.html', context)
