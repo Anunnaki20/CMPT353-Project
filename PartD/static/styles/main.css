@@ -81,6 +81,7 @@ a.profileLink:active {
     height: 100px;
     border: 2px ridge black; 
     border-radius: 8px;
+    background-color: white;
 }
 
 .doughnut_name{
@@ -144,6 +145,7 @@ table{
 .login_info, .register_info{
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.2rem;
@@ -155,6 +157,7 @@ table{
 
 .login_button, .register{
     text-decoration: none;
+    border: 1px solid black;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.2rem;
     margin: 1.5rem;
